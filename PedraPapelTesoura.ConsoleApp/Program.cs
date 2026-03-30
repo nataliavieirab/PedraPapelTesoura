@@ -9,24 +9,47 @@ class Program
 
     while (true)
     {
+      ExibirCabecalho();
 
-      Console.Clear();
-      Console.WriteLine("=========================================");
-      Console.WriteLine("--------- Pedra, Papel e Tesoura --------");
-      Console.WriteLine("=========================================");
+      string strOpcaoJogador = ExecutarRodadaJogador();
 
-      int opcaoJogador;
-      int opcaoComputador;
+      string strOpcaoComputador = ExecutarRodadaComputador();
 
-      #region Jogador
-      Console.WriteLine("\n---------- Rodada do Jogador ------------");
-      Console.WriteLine("\n>> Sua vez de jogar!\nEscolha uma das opções abaixo:");
-      Console.WriteLine("\n1 - Pedra");
+      Console.WriteLine("\nDigite ENTER para ver o resultado...");
+      Console.ReadLine();
+
+      ExecutarLogicaVencedor(strOpcaoJogador, strOpcaoComputador);
+
+      if (!DesejaContinuar())
+        break;
+    }
+
+    Console.ReadLine();
+
+  }
+
+  static void ExibirCabecalho()
+  {
+    Console.Clear();
+    Console.WriteLine("=========================================");
+    Console.WriteLine("----------Pedra, Papel e Tesoura---------");
+    Console.WriteLine("=========================================");
+  }
+
+  static string ExecutarRodadaJogador()
+  {
+    while (true)
+    {
+      Console.WriteLine("\n------------Rodada do Jogador------------");
+
+      Console.WriteLine("\nSua vez de jogar! Escolha uma das opções!");
+      Console.WriteLine("1 - Pedra");
       Console.WriteLine("2 - Papel");
       Console.WriteLine("3 - Tesoura");
 
       Console.Write("\nDigite a sua escolha: ");
-      opcaoJogador = Convert.ToInt32(Console.ReadLine());
+
+      int opcaoJogador = Convert.ToInt32(Console.ReadLine());
 
       string strOpcaoJogador;
 
@@ -45,78 +68,55 @@ class Program
           break;
 
         default:
-          Console.WriteLine("\n>> Opção inválida. Tente novamente!");
+          Console.WriteLine("Opção inválida! Tente novamente");
           Console.Write("Digite ENTER para continuar...");
           Console.ReadLine();
           continue;
       }
 
       Console.WriteLine($"\nVocê escolheu: {strOpcaoJogador}!");
-
-      #endregion
-
-      #region Computador
-      Console.WriteLine("\n>> Agora é a vez do computador! ");
-      Console.Write("Digite ENTER para continuar...");
-      Console.ReadLine();
-
-      Console.WriteLine("\n---------- Rodada do Computador ---------");
-
-      opcaoComputador = RandomNumberGenerator.GetInt32(1, 4);
-
-      string strOpcaoComputador;
-
-      switch (opcaoComputador)
-      {
-        case 1:
-          strOpcaoComputador = "PEDRA";
-          break;
-
-        case 2:
-          strOpcaoComputador = "PAPEL";
-          break;
-
-        case 3:
-          strOpcaoComputador = "TESOURA";
-          break;
-
-        default:
-          Console.Write("\nOpção inválida! Tente novamente");
-          Console.Write("Digite ENTER para continuar...");
-          Console.ReadLine();
-          continue;
-      }
-
-      Console.WriteLine($"\nO computador escolheu a opção: {strOpcaoComputador}");
-
-      #endregion
-
-      Console.WriteLine("\nDigite ENTER para ver o resultado...");
-      Console.ReadLine();
-
-      #region Lógica Vencedor
-
-      Console.WriteLine("---------- Resultado da Rodada -----------");
-
-      if (strOpcaoJogador == strOpcaoComputador)
-        Console.WriteLine("\n>> Empate!");
-
-      else if (strOpcaoJogador == "PEDRA" && strOpcaoComputador == "TESOURA" || strOpcaoJogador == "PAPEL" && strOpcaoComputador == "PEDRA" || strOpcaoJogador == "TESOURA" && strOpcaoComputador == "PAPEL")
-        Console.WriteLine("\n>> Parabéns! Você venceu :)");
-
-      else
-        Console.WriteLine("\n>> Que pena! O computador venceu :(");
-
-      #endregion
-
-      Console.Write("\nDeseja jogar novamente? [S/N] --> ");
-      string? opcaoEscolhida = Console.ReadLine()?.ToUpper();
-
-      if (opcaoEscolhida != "S")
-        break;
-
+      return strOpcaoJogador;
     }
+  }
 
-    Console.ReadLine();
+  static string ExecutarRodadaComputador()
+  {
+    Console.WriteLine("\n----------Rodada do Computador-----------");
+
+    int opcaoComputador = RandomNumberGenerator.GetInt32(1, 4);
+
+    string strOpcaoComputador;
+
+    if (opcaoComputador == 1) strOpcaoComputador = "PEDRA";
+    else if (opcaoComputador == 2) strOpcaoComputador = "PAPEL";
+    else strOpcaoComputador = "TESOURA";
+
+    Console.WriteLine($"\nO computador escolheu a opção: {strOpcaoComputador}");
+    return strOpcaoComputador;
+  }
+
+  static void ExecutarLogicaVencedor(string strOpcaoJogador, string strOpcaoComputador)
+  {
+    Console.WriteLine("----------Resultado da Rodada-----------");
+
+    if (strOpcaoJogador == strOpcaoComputador)
+      Console.WriteLine("\nEmpate!");
+
+    else if (strOpcaoJogador == "PEDRA" && strOpcaoComputador == "TESOURA" || strOpcaoJogador == "PAPEL" && strOpcaoComputador == "PEDRA" || strOpcaoJogador == "TESOURA" && strOpcaoComputador == "PAPEL")
+      Console.WriteLine("\nVocê venceu!");
+
+    else
+      Console.WriteLine("\nO computador venceu!");
+  }
+
+  static bool DesejaContinuar()
+  {
+    Console.Write("Deseja jogar novamente? [S/N] ");
+    string? opcaoEscolhida = Console.ReadLine()?.ToUpper();
+
+    if (opcaoEscolhida != "S")
+      return false;
+
+    return true;
   }
 }
