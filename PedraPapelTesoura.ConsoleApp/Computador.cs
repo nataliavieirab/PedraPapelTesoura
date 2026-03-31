@@ -1,20 +1,19 @@
 using System.Security.Cryptography;
 
-static class Computador
+static class Computer
 {
+  public static int computerOption;
+  public static string? computerOptionStr;
 
-  public static int opcaoComputador;
-  public static string strOpcaoComputador;
-  public static string ExecutarRodada()
+  public static string ExecuteRound()
   {
+    computerOption = RandomNumberGenerator.GetInt32(1, 4);
 
-    opcaoComputador = RandomNumberGenerator.GetInt32(1, 4);
+    if (computerOption == 1) computerOptionStr = "PEDRA";
+    else if (computerOption == 2) computerOptionStr = "PAPEL";
+    else computerOptionStr = "TESOURA";
 
-    if (opcaoComputador == 1) strOpcaoComputador = "PEDRA";
-    else if (opcaoComputador == 2) strOpcaoComputador = "PAPEL";
-    else strOpcaoComputador = "TESOURA";
-
-    Console.WriteLine($"\nO computador escolheu a opção: {strOpcaoComputador}");
-    return strOpcaoComputador;
+    Console.WriteLine($"\nO computador escolheu a opção: {computerOptionStr}");
+    return computerOptionStr;
   }
 }

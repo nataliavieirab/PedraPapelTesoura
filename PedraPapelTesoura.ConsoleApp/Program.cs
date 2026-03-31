@@ -4,34 +4,33 @@ class Program
 {
   static void Main(string[] args)
   {
-
-    Iniciar();
-
+    Start();
   }
 
-  static void Iniciar()
+  static void Start()
   {
     while (true)
     {
-      ExibirCabecalho();
+      ShowHeader();
 
       Console.WriteLine("\n------------Rodada do Jogador------------");
-      Jogador.ExecutarRodada();
+      Player.ExecuteRound();
 
       Console.WriteLine("\n----------Rodada do Computador-----------");
-      string strOpcaoComputador = Computador.ExecutarRodada();
+      string computerChoiceStr = Computer.ExecuteRound();
 
       Console.WriteLine("\nDigite ENTER para ver o resultado...");
       Console.ReadLine();
 
       Console.WriteLine("----------Resultado da Rodada-----------");
-      Jogador.Ganhou(strOpcaoComputador);
+      Player.CheckWinner(computerChoiceStr);
 
-      if (!Jogador.DesejaContinuar())
+      if (!Player.WantsToContinue())
         break;
     }
   }
-  static void ExibirCabecalho()
+
+  static void ShowHeader()
   {
     Console.Clear();
     Console.WriteLine("=========================================");

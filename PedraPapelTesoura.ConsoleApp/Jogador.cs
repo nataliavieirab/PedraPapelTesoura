@@ -1,14 +1,12 @@
-static class Jogador
+static class Player
 {
+  public static int playerOption;
+  public static string? playerOptionStr;
 
-  public static int opcaoJogador;
-  public static string strOpcaoJogador;
-
-  public static string ExecutarRodada()
+  public static string ExecuteRound()
   {
     while (true)
     {
-
       Console.WriteLine("\nSua vez de jogar! Escolha uma das opções!");
       Console.WriteLine("1 - Pedra");
       Console.WriteLine("2 - Papel");
@@ -16,21 +14,20 @@ static class Jogador
 
       Console.Write("\nDigite a sua escolha: ");
 
-      opcaoJogador = Convert.ToInt32(Console.ReadLine());
+      playerOption = Convert.ToInt32(Console.ReadLine());
 
-
-      switch (opcaoJogador)
+      switch (playerOption)
       {
         case 1:
-          strOpcaoJogador = "PEDRA";
+          playerOptionStr = "PEDRA";
           break;
 
         case 2:
-          strOpcaoJogador = "PAPEL";
+          playerOptionStr = "PAPEL";
           break;
 
         case 3:
-          strOpcaoJogador = "TESOURA";
+          playerOptionStr = "TESOURA";
           break;
 
         default:
@@ -40,30 +37,33 @@ static class Jogador
           continue;
       }
 
-      Console.WriteLine($"\nVocê escolheu: {strOpcaoJogador}!");
-      return strOpcaoJogador;
+      Console.WriteLine($"\nVocê escolheu: {playerOptionStr}!");
+      return playerOptionStr;
     }
   }
 
-  public static void Ganhou(string strOpcaoComputador)
+  public static void CheckWinner(string computerOptionStr)
   {
-
-    if (strOpcaoJogador == strOpcaoComputador)
+    if (playerOptionStr == computerOptionStr)
       Console.WriteLine("\nEmpate!");
 
-    else if (strOpcaoJogador == "PEDRA" && strOpcaoComputador == "TESOURA" || strOpcaoJogador == "PAPEL" && strOpcaoComputador == "PEDRA" || strOpcaoJogador == "TESOURA" && strOpcaoComputador == "PAPEL")
+    else if (
+      playerOptionStr == "PEDRA" && computerOptionStr == "TESOURA" ||
+      playerOptionStr == "PAPEL" && computerOptionStr == "PEDRA" ||
+      playerOptionStr == "TESOURA" && computerOptionStr == "PAPEL"
+    )
       Console.WriteLine("\nVocê venceu!");
 
     else
       Console.WriteLine("\nO computador venceu!");
   }
 
-  public static bool DesejaContinuar()
+  public static bool WantsToContinue()
   {
     Console.Write("\nDeseja jogar novamente? [S/N] ");
-    string? opcaoEscolhida = Console.ReadLine()?.ToUpper();
+    string? chosenOption = Console.ReadLine()?.ToUpper();
 
-    if (opcaoEscolhida != "S")
+    if (chosenOption != "S")
       return false;
 
     return true;
