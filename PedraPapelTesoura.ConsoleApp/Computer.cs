@@ -5,7 +5,7 @@ static class Computer
   public static int computerOption;
   public static string? computerOptionStr;
 
-  public static string ExecuteRound()
+  public static string ChooseOption()
   {
     computerOption = RandomNumberGenerator.GetInt32(1, 4);
 
